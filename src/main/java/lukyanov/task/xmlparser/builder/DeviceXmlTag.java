@@ -1,8 +1,8 @@
 package lukyanov.task.xmlparser.builder;
 
-public enum DeviceXmlName {
+public enum DeviceXmlTag {
     NAME,
-    ORIGIN,
+    BRAND,
     PRICE,
     TYPE,
     PERIPHERAL,
@@ -13,15 +13,13 @@ public enum DeviceXmlName {
     USB,
     LPT,
     CRITICAL,
-    DEVICE_ID,
-    TITLE,
-    STORAGE_DEVICE_PARAMETERS,
     STORAGE_CAPACITY,
     WRITE_SPEED,
     READING_SPEED,
-    AUDIO_DEVICE_PARAMETERS,
     WIRELESS,
-    SURROUND;
+    SURROUND,
+    DEVICE_ID,
+    TITLE,;
 
     private static final char UNDERSCORE = '_';
     private static final char HYPHEN = '-';

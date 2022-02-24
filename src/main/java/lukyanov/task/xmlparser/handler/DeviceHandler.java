@@ -1,14 +1,24 @@
 package lukyanov.task.xmlparser.handler;
 
+import lukyanov.task.xmlparser.builder.DeviceXmlTag;
+import lukyanov.task.xmlparser.entity.Device;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class DeviceHandler extends DefaultHandler {
+import java.util.EnumSet;
+import java.util.HashSet;
+import java.util.Set;
 
-    @Override
-    public void startDocument() {
-        System.out.println("parse started");
+public class DeviceHandler extends DefaultHandler {
+    private Set<Device> devices;
+    private Device current;
+    private DeviceXmlTag currentXmlName;
+    private EnumSet<DeviceXmlTag> withText;
+    private static final String ELEMENT_DEVICE = "device";
+
+    public DeviceHandler() {
+        devices = new HashSet<>();
+        withText = EnumSet.range(DeviceXmlTag.NAME, DeviceXmlTag.SURROUND);
     }
 
     @Override
@@ -35,8 +45,4 @@ public class DeviceHandler extends DefaultHandler {
         System.out.print(" " + qName);
     }
 
-    @Override
-    public void endDocument() {
-        System.out.println("parse ended");
-    }
 }

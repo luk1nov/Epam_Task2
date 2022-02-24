@@ -7,7 +7,7 @@ public class Device {
     private String name;
     private String brand;
     private double price;
-    private Ports ports;
+    private DeviceType type;
     private boolean critical;
     private LocalDateTime warranty;
 
@@ -38,12 +38,12 @@ public class Device {
         this.price = price;
     }
 
-    public Ports getPorts() {
-        return ports;
+    public DeviceType getType() {
+        return type;
     }
 
-    public void setPorts(Ports ports) {
-        this.ports = ports;
+    public void setType(DeviceType type) {
+        this.type = type;
     }
 
     public boolean isCritical() {
@@ -68,7 +68,7 @@ public class Device {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Device device = (Device) o;
-        return Double.compare(device.price, price) == 0 && critical == device.critical && name.equals(device.name) && brand.equals(device.brand) && ports.equals(device.ports) && warranty.equals(device.warranty);
+        return Double.compare(device.price, price) == 0 && critical == device.critical && name.equals(device.name) && brand.equals(device.brand) && type.equals(device.type) && warranty.equals(device.warranty);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Device {
         result = 17 * result + name.hashCode();
         result = 17 * result + brand.hashCode();
         result = 17 * result + Double.hashCode(price);
-        result = 17 * result + ports.hashCode();
+        result = 17 * result + type.hashCode();
         result = 17 * result + (critical ? 1 : 0);
         result = 17 * result + warranty.hashCode();
         return result;
@@ -89,7 +89,7 @@ public class Device {
         sb.append("name='").append(name).append('\'');
         sb.append(", brand='").append(brand).append('\'');
         sb.append(", price=").append(price);
-        sb.append(", ports=").append(ports);
+        sb.append(", type=").append(type);
         sb.append(", critical=").append(critical);
         sb.append(", warranty=").append(warranty);
         sb.append('}');
