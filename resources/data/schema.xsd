@@ -12,40 +12,41 @@
         </complexType>
     </element>
 
-
     <element name="device" type="tns:Device" abstract="true"/>
-    <element name="io-device" type="tns:ioDevice" substitutionGroup="tns:device"/>
-    <element name="multimedia-device" type="tns:multimediaDevice" substitutionGroup="tns:device"/>
+    <element name="storage-device" type="tns:storageDevice" substitutionGroup="tns:device"/>
+    <element name="audio-device" type="tns:audioDevice" substitutionGroup="tns:device"/>
 
 
-    <complexType name="Device">
+    <complexType name="Device" >
         <sequence>
             <element name="name" type="string"/>
-            <element name="origin" type="string"/>
-            <element name="price" type="positiveInteger"/>
-            <element name="peripheral" type="boolean"/>
-            <element name="power-usage" type="positiveInteger"/>
-            <element name="ports" type="tns:Ports"/>
+            <element name="brand" type="tns:Brand"/>
+            <element name="price" type="double"/>
+            <element name="type" type="tns:Type"/>
+            <element name="critical" type="boolean" default="false"/>
         </sequence>
         <attribute name="device-id" type="tns:deviceID" use="required"/>
         <attribute name="title" type="string" use="optional"/>
     </complexType>
 
-    <complexType name="ioDevice">
+    <complexType name="storageDevice">
         <complexContent>
             <extension base="tns:Device">
                 <sequence>
-                    <element name="io-device-parameters" type="tns:ioDeviceParameters"/>
+                    <element name="storage-capacity" type="positiveInteger"/>
+                    <element name="write-speed" type="positiveInteger"/>
+                    <element name="read-speed" type="positiveInteger"/>
                 </sequence>
             </extension>
         </complexContent>
     </complexType>
 
-    <complexType name="multimediaDevice">
+    <complexType name="audioDevice">
         <complexContent>
             <extension base="tns:Device">
                 <sequence>
-                    <element name="multimedia-device-parameters" type="tns:multimediaDeviceParameters"/>
+                    <element name="wireless" type="boolean"/>
+                    <element name="surround" type="tns:Surround"/>
                 </sequence>
             </extension>
         </complexContent>
@@ -58,6 +59,15 @@
         </restriction>
     </simpleType>
 
+    <complexType name="Type">
+        <sequence>
+            <element name="peripheral" type="boolean"/>
+            <element name="power-usage" type="positiveInteger"/>
+            <element name="cooler" type="boolean"/>
+            <element name="ports" type="tns:Ports" />
+        </sequence>
+    </complexType>
+
     <complexType name="Ports">
         <sequence>
             <element name="com" type="boolean"/>
@@ -66,15 +76,23 @@
         </sequence>
     </complexType>
 
-    <simpleType name="ioDeviceParameters">
+    <simpleType name="Surround">
         <restriction base="string">
-            <enumeration value="backlight"/>
+            <enumeration value="5.1"/>
+            <enumeration value="7.1"/>
+            <enumeration value="9.1"/>
         </restriction>
     </simpleType>
 
-    <simpleType name="multimediaDeviceParameters">
+    <simpleType name="Brand">
         <restriction base="string">
-            <enumeration value="backlight"/>
+            <enumeration value="Razer"/>
+            <enumeration value="Sony"/>
+            <enumeration value="HyperX"/>
+            <enumeration value="Logitech"/>
+            <enumeration value="Oclick"/>
+            <enumeration value="Sandisk"/>
+            <enumeration value="WD"/>
         </restriction>
     </simpleType>
     
