@@ -7,18 +7,18 @@ import java.util.Set;
 
 public abstract class AbstractDeviceBuilder {
 
-    protected Set<Device> devices;
+    protected Set<Device> deviceSet;
 
     public AbstractDeviceBuilder() {
-        devices = new HashSet<>();
+        deviceSet = new HashSet<>();
     }
 
-    public AbstractDeviceBuilder(Set<Device> devices) {
-        this.devices = devices;
+    public AbstractDeviceBuilder(Set<Device> deviceSet) {
+        this.deviceSet = deviceSet;
     }
 
-    public Set<Device> getDevices() {
-        return devices;
+    public Set<Device> getDeviceSet() {
+        return deviceSet;
     }
 
     public abstract void buildSetDevices(String filename);

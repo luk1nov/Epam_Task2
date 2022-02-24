@@ -1,17 +1,35 @@
 package lukyanov.task.xmlparser.entity;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.time.Year;
 
-public class Device {
+public abstract class Device {
+    private String deviceId;
+    private String title;
     private String name;
     private String brand;
     private double price;
     private DeviceType type;
     private boolean critical;
-    private LocalDateTime warranty;
 
     public Device() {
+        type = new DeviceType();
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getName() {
@@ -54,21 +72,13 @@ public class Device {
         this.critical = critical;
     }
 
-    public LocalDateTime getWarranty() {
-        return warranty;
-    }
-
-    public void setWarranty(LocalDateTime warranty) {
-        this.warranty = warranty;
-    }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Device device = (Device) o;
-        return Double.compare(device.price, price) == 0 && critical == device.critical && name.equals(device.name) && brand.equals(device.brand) && type.equals(device.type) && warranty.equals(device.warranty);
+        return Double.compare(device.price, price) == 0 && critical == device.critical && name.equals(device.name) && brand.equals(device.brand) && type.equals(device.type);
     }
 
     @Override
@@ -79,19 +89,19 @@ public class Device {
         result = 17 * result + Double.hashCode(price);
         result = 17 * result + type.hashCode();
         result = 17 * result + (critical ? 1 : 0);
-        result = 17 * result + warranty.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Device{");
-        sb.append("name='").append(name).append('\'');
+        sb.append("deviceId='").append(deviceId).append('\'');
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", name='").append(name).append('\'');
         sb.append(", brand='").append(brand).append('\'');
         sb.append(", price=").append(price);
         sb.append(", type=").append(type);
         sb.append(", critical=").append(critical);
-        sb.append(", warranty=").append(warranty);
         sb.append('}');
         return sb.toString();
     }

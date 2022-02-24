@@ -1,10 +1,10 @@
 package lukyanov.task.xmlparser.builder;
 
 public enum DeviceXmlTag {
+    DEVICES,
     NAME,
     BRAND,
     PRICE,
-    TYPE,
     PERIPHERAL,
     POWER_USAGE,
     COOLER,
@@ -18,8 +18,11 @@ public enum DeviceXmlTag {
     READING_SPEED,
     WIRELESS,
     SURROUND,
+    TYPE,
     DEVICE_ID,
-    TITLE,;
+    TITLE,
+    STORAGE_DEVICE,
+    AUDIO_DEVICE;
 
     private static final char UNDERSCORE = '_';
     private static final char HYPHEN = '-';

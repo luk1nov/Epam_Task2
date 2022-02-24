@@ -12,7 +12,6 @@ public class DeviceBuilderFactory {
     }
 
     private DeviceBuilderFactory(){
-
     }
 
     public static AbstractDeviceBuilder createDeviceBuilder(String typeParser){

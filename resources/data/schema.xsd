@@ -35,7 +35,7 @@
                 <sequence>
                     <element name="storage-capacity" type="positiveInteger"/>
                     <element name="write-speed" type="positiveInteger"/>
-                    <element name="read-speed" type="positiveInteger"/>
+                    <element name="reading-speed" type="positiveInteger"/>
                 </sequence>
             </extension>
         </complexContent>

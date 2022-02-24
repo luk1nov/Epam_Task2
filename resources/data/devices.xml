@@ -22,7 +22,7 @@
         <surround>5.1</surround>
     </audio-device>
 
-    <audio-device device-id="a2" title="string">
+    <audio-device device-id="a2">
         <name>Microphone</name>
         <brand>HyperX</brand>
         <price>129.99</price>
@@ -77,7 +77,7 @@
         <critical>false</critical>
         <storage-capacity>256</storage-capacity>
         <write-speed>1800</write-speed>
-        <read-speed>1600</read-speed>
+        <reading-speed>1600</reading-speed>
     </storage-device>
 
     <storage-device device-id="s2">
@@ -97,7 +97,7 @@
         <critical>true</critical>
         <storage-capacity>1024</storage-capacity>
         <write-speed>3600</write-speed>
-        <read-speed>3200</read-speed>
+        <reading-speed>3200</reading-speed>
     </storage-device>
 
     <storage-device device-id="s3">
@@ -117,7 +117,7 @@
         <critical>false</critical>
         <storage-capacity>512</storage-capacity>
         <write-speed>2000</write-speed>
-        <read-speed>1700</read-speed>
+        <reading-speed>1700</reading-speed>
     </storage-device>
 
 </devices>

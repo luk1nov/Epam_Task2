@@ -10,6 +10,7 @@ public class DeviceType {
     private Ports ports;
 
     public DeviceType() {
+        ports = new Ports();
     }
 
     public boolean isPeripheral() {

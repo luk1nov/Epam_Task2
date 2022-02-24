@@ -3,18 +3,18 @@ package lukyanov.task.xmlparser.entity;
 import java.util.Objects;
 
 public class AudioDevice extends Device{
-    private Surround surround;
+    private String surround;
     private boolean wireless;
 
     public AudioDevice() {
         super();
     }
 
-    public Surround getSurround() {
+    public String getSurround() {
         return surround;
     }
 
-    public void setSurround(Surround surround) {
+    public void setSurround(String surround) {
         this.surround = surround;
     }
 
@@ -31,7 +31,7 @@ public class AudioDevice extends Device{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AudioDevice that = (AudioDevice) o;
-        return wireless == that.wireless && surround == that.surround;
+        return wireless == that.wireless && surround.equals(that.surround);
     }
 
     @Override
