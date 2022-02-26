@@ -17,6 +17,8 @@ import java.util.HashSet;
 
 public class DevicesDomBuilder extends AbstractDeviceBuilder{
     private static final Logger logger = LogManager.getLogger();
+    private static final char UNDERSCORE = '_';
+    private static final char HYPHEN = '-';
     private DocumentBuilder docBuilder;
 
 
@@ -69,7 +71,7 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
         device.setName(data);
 
         data = getElementTextContent(deviceElement, DeviceXmlTag.BRAND.getTagName());
-        data = Brand.valueOf(data.toUpperCase()).getBrand();
+        data = Brand.valueOf(data.toUpperCase().replace(HYPHEN, UNDERSCORE)).getBrand();
         device.setBrand(data);
 
         data = getElementTextContent(deviceElement, DeviceXmlTag.PRICE.getTagName());

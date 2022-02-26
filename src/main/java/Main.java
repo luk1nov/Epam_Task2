@@ -11,10 +11,9 @@ public class Main {
     public static void main(String[] args) {
         DeviceSchemaValidator validator = DeviceSchemaValidator.getInstance();
         if(validator.validateXml()){
-            AbstractDeviceBuilder builder = DeviceBuilderFactory.createDeviceBuilder("SAX");
+            AbstractDeviceBuilder builder = DeviceBuilderFactory.createDeviceBuilder("STAX");
             builder.buildSetDevices("resources/data/devices.xml");
             System.out.println(builder.getDeviceSet().toString());
-
         }
     }
 }

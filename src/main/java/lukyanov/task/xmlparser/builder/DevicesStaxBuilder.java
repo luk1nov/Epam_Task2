@@ -1,6 +1,7 @@
 package lukyanov.task.xmlparser.builder;
 
 import lukyanov.task.xmlparser.entity.*;
+import lukyanov.task.xmlparser.exception.CustomException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,15 +38,15 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
                 }
             }
         } catch (XMLStreamException e) {
-            logger.error(e.getMessage());
-        } catch (FileNotFoundException e) {
-            logger.error(e.getMessage());
+            logger.error("reading xml error", e);
         } catch (IOException e) {
-            logger.error();
+            logger.error("reading file " + filename + " error");
+        } catch (CustomException e) {
+            logger.error("xml file has unknown tag", e);
         }
     }
 
-    private Device buildDevice(XMLStreamReader reader) throws XMLStreamException {
+    private Device buildDevice(XMLStreamReader reader) throws XMLStreamException, CustomException {
         Device device = reader.getLocalName().equals(DeviceXmlTag.AUDIO_DEVICE.getTagName()) ? new AudioDevice() : new StorageDevice();
         device.setDeviceId(reader.getAttributeValue(null, DeviceXmlTag.DEVICE_ID.getTagName()));
         device.setTitle(reader.getAttributeValue(null, DeviceXmlTag.TITLE.getTagName()));
@@ -55,33 +56,62 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
             switch (type){
                 case XMLStreamConstants.START_ELEMENT -> {
                     name = reader.getLocalName();
-                    switch (DeviceXmlTag.valueOf(name.toUpperCase().replace(HYPHEN, UNDERSCORE))){
+                    DeviceXmlTag currentTag = DeviceXmlTag.valueOf(name.toUpperCase().replace(HYPHEN, UNDERSCORE));
+                    switch (currentTag){
                         case NAME -> device.setName(getXMLText(reader));
                         case BRAND -> device.setBrand(getXMLText(reader));
                         case PRICE -> device.setPrice(Double.parseDouble(getXMLText(reader)));
                         case CRITICAL -> device.setCritical(Boolean.parseBoolean(getXMLText(reader)));
                         case TYPE -> {
-                            DeviceType deviceType = device.getType();
-
+                            DeviceType deviceType = buildDeviceType(reader, device);
+                            device.setType(deviceType);
+                        }
+                        case WIRELESS -> {
+                            AudioDevice audioDevice = (AudioDevice) device;
+                            audioDevice.setWireless(Boolean.parseBoolean(getXMLText(reader)));
+                        }
+                        case SURROUND -> {
+                            AudioDevice audioDevice = (AudioDevice) device;
+                            audioDevice.setSurround(getXMLText(reader));
+                        }
+                        case STORAGE_CAPACITY -> {
+                            StorageDevice storageDevice = (StorageDevice) device;
+                            storageDevice.setStorageCapacity(Integer.parseInt(getXMLText(reader)));
+                        }
+                        case READING_SPEED -> {
+                            StorageDevice storageDevice = (StorageDevice) device;
+                            storageDevice.setReadingSpeed(Integer.parseInt(getXMLText(reader)));
+                        }
+                        case WRITE_SPEED -> {
+                            StorageDevice storageDevice = (StorageDevice) device;
+                            storageDevice.setWriteSpeed(Integer.parseInt(getXMLText(reader)));
+                        }
+                        default -> {
+                            logger.error("Unknown tag: " + currentTag);
+                            throw new CustomException("Unknown tag: " + currentTag);
                         }
                     }
                 }
                 case XMLStreamConstants.END_ELEMENT -> {
-
+                    name = reader.getLocalName();
+                    if (isDeviceTag(name)){
+                        return device;
+                    }
                 }
             }
         }
-
         return device;
     }
 
 
-    private void buildDeviceType(XMLStreamReader reader, DeviceType deviceType) throws XMLStreamException {
+    private DeviceType buildDeviceType(XMLStreamReader reader, Device device) throws XMLStreamException, CustomException {
+        DeviceType deviceType = device.getType();
+        String name;
         while (reader.hasNext()){
             int type = reader.next();
-            String name = reader.getLocalName();
             switch (type){
                 case XMLStreamConstants.START_ELEMENT -> {
+                    name = reader.getLocalName();
                     String data = getXMLText(reader);
                     DeviceXmlTag currentTag = DeviceXmlTag.valueOf(name.toUpperCase().replace(HYPHEN, UNDERSCORE));
                     switch (currentTag){
@@ -89,28 +119,32 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
                         case POWER_USAGE -> deviceType.setPowerUsage(Integer.parseInt(data));
                         case COOLER -> deviceType.setCooler(Boolean.parseBoolean(data));
                         case PORTS -> {
-                            Ports ports = deviceType.getPorts();
-
+                            Ports ports = buildDevicePorts(reader, device);
+                            deviceType.setPorts(ports);
                         }
                         default -> logger.error("tag not found");
                     }
-
                 }
                 case XMLStreamConstants.END_ELEMENT -> {
-
+                    name = reader.getLocalName();
+                    if (name.equals(DeviceXmlTag.TYPE.getTagName())){
+                        return deviceType;
+                    }
                 }
             }
         }
-
+        throw new CustomException("unknown element in tag <type>");
     }
 
 
-    private void buildDevicePorts(XMLStreamReader reader, Ports ports) throws XMLStreamException {
+    private Ports buildDevicePorts(XMLStreamReader reader, Device device) throws XMLStreamException, CustomException {
+        Ports ports = device.getType().getPorts();
+        String name;
         while (reader.hasNext()){
             int type = reader.next();
-            String name = reader.getLocalName();
             switch (type){
                 case XMLStreamConstants.START_ELEMENT -> {
+                    name = reader.getLocalName();
                     String data = getXMLText(reader);
                     DeviceXmlTag currentTag = DeviceXmlTag.valueOf(name.toUpperCase().replace(HYPHEN, UNDERSCORE));
                     switch (currentTag){
@@ -121,10 +155,14 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
                     }
                 }
                 case XMLStreamConstants.END_ELEMENT -> {
-
+                    name = reader.getLocalName();
+                    if (name.equals(DeviceXmlTag.PORTS.getTagName())){
+                        return ports;
+                    }
                 }
             }
         }
+        throw new CustomException("unknown element int tag <ports>");
     }
 
     private String getXMLText(XMLStreamReader reader) throws XMLStreamException {

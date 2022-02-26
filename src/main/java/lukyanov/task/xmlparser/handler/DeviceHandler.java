@@ -55,7 +55,7 @@ public class DeviceHandler extends DefaultHandler {
         if (currentXmlTag != null){
             switch (currentXmlTag){
                 case NAME -> currentDevice.setName(data);
-                case BRAND -> currentDevice.setBrand(Brand.valueOf(data.toUpperCase()).getBrand());
+                case BRAND -> currentDevice.setBrand(Brand.valueOf(data.toUpperCase().replace(HYPHEN, UNDERSCORE)).getBrand());
                 case PRICE -> currentDevice.setPrice(Double.parseDouble(data));
                 case CRITICAL -> currentDevice.setCritical(Boolean.parseBoolean(data));
                 case PERIPHERAL -> currentDevice.getType().setPeripheral(Boolean.parseBoolean(data));
