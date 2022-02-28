@@ -7,6 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
@@ -58,6 +60,7 @@ public class DeviceHandler extends DefaultHandler {
                 case BRAND -> currentDevice.setBrand(Brand.valueOf(data.toUpperCase().replace(HYPHEN, UNDERSCORE)).getBrand());
                 case PRICE -> currentDevice.setPrice(Double.parseDouble(data));
                 case CRITICAL -> currentDevice.setCritical(Boolean.parseBoolean(data));
+                case WARRANTY -> currentDevice.setWarranty(LocalDate.parse(data));
                 case PERIPHERAL -> currentDevice.getType().setPeripheral(Boolean.parseBoolean(data));
                 case POWER_USAGE -> currentDevice.getType().setPowerUsage(Integer.parseInt(data));
                 case COOLER -> currentDevice.getType().setCooler(Boolean.parseBoolean(data));

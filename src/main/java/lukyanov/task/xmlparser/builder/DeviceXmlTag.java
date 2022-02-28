@@ -13,6 +13,7 @@ public enum DeviceXmlTag {
     USB,
     LPT,
     CRITICAL,
+    WARRANTY,
     STORAGE_CAPACITY,
     WRITE_SPEED,
     READING_SPEED,

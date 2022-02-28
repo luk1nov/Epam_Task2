@@ -13,6 +13,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.HashSet;
 
 public class DevicesDomBuilder extends AbstractDeviceBuilder{
@@ -24,7 +26,6 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
 
     public DevicesDomBuilder() {
         super();
-        deviceSet = new HashSet<>();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         try {
             docBuilder = factory.newDocumentBuilder();
@@ -62,6 +63,7 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
         Device device = deviceElement.getTagName().equals(DeviceXmlTag.AUDIO_DEVICE.getTagName()) ?
                 new AudioDevice() : new StorageDevice();
         String data = deviceElement.getAttribute(DeviceXmlTag.DEVICE_ID.getTagName());
+        logger.debug(data);
         device.setDeviceId(data);
 
         data = deviceElement.getAttribute(DeviceXmlTag.TITLE.getTagName());
@@ -79,6 +81,9 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
 
         data = getElementTextContent(deviceElement, DeviceXmlTag.CRITICAL.getTagName());
         device.setCritical(Boolean.parseBoolean(data));
+
+        data = getElementTextContent(deviceElement, DeviceXmlTag.WARRANTY.getTagName());
+        device.setWarranty(LocalDate.parse(data));
 
         DeviceType type = device.getType();
         data = getElementTextContent(deviceElement, DeviceXmlTag.PERIPHERAL.getTagName());
@@ -104,7 +109,7 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
             data = getElementTextContent(deviceElement, DeviceXmlTag.WIRELESS.getTagName());
             audioDevice.setWireless(Boolean.parseBoolean(data));
             data = getElementTextContent(deviceElement, DeviceXmlTag.SURROUND.getTagName());
-            audioDevice.setDeviceId(data);
+            audioDevice.setSurround(data);
         } else {
             StorageDevice storageDevice = (StorageDevice) device;
             data = getElementTextContent(deviceElement, DeviceXmlTag.STORAGE_CAPACITY.getTagName());
@@ -117,10 +122,14 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
         return device;
     }
 
-    private static String getElementTextContent(Element element, String elementName){
+    private String getElementContent(Element element, String elementName){
         NodeList nList = element.getElementsByTagName(elementName);
         Node node = nList.item(0);
         return node.getTextContent();
+    }
+
+    private String getElementTextContent(Element element, String elementName){
+        return getElementContent(element, elementName).strip();
     }
 
 }

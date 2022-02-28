@@ -30,8 +30,10 @@ public class AudioDevice extends Device{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         AudioDevice that = (AudioDevice) o;
-        return wireless == that.wireless && surround.equals(that.surround);
+        if (wireless != that.wireless) return false;
+        return surround != null ? surround.equals(that.surround) : that.surround == null;
     }
 
     @Override

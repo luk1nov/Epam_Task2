@@ -49,8 +49,11 @@ public class DeviceType {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        DeviceType that = (DeviceType) o;
-        return peripheral == that.peripheral && powerUsage == that.powerUsage && cooler == that.cooler && ports.equals(that.ports);
+        DeviceType type = (DeviceType) o;
+        if (peripheral != type.peripheral) return false;
+        if (powerUsage != type.powerUsage) return false;
+        if (cooler != type.cooler) return false;
+        return ports != null ? ports.equals(type.ports) : type.ports == null;
     }
 
     @Override

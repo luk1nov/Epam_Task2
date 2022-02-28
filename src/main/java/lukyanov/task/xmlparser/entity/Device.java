@@ -1,7 +1,7 @@
 package lukyanov.task.xmlparser.entity;
 
-import java.time.LocalDateTime;
-import java.time.Year;
+import java.time.Duration;
+import java.time.LocalDate;
 
 public abstract class Device {
     private String deviceId;
@@ -11,6 +11,7 @@ public abstract class Device {
     private double price;
     private DeviceType type;
     private boolean critical;
+    private LocalDate warranty;
 
     public Device() {
         type = new DeviceType();
@@ -72,13 +73,29 @@ public abstract class Device {
         this.critical = critical;
     }
 
+    public LocalDate getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(LocalDate warranty) {
+        this.warranty = warranty;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Device device = (Device) o;
-        return Double.compare(device.price, price) == 0 && critical == device.critical && name.equals(device.name) && brand.equals(device.brand) && type.equals(device.type);
+
+        if (Double.compare(device.price, price) != 0) return false;
+        if (critical != device.critical) return false;
+        if (deviceId != null ? !deviceId.equals(device.deviceId) : device.deviceId != null) return false;
+        if (title != null ? !title.equals(device.title) : device.title != null) return false;
+        if (name != null ? !name.equals(device.name) : device.name != null) return false;
+        if (brand != null ? !brand.equals(device.brand) : device.brand != null) return false;
+        if (type != null ? !type.equals(device.type) : device.type != null) return false;
+        return warranty != null ? warranty.equals(device.warranty) : device.warranty == null;
     }
 
     @Override
@@ -89,6 +106,7 @@ public abstract class Device {
         result = 17 * result + Double.hashCode(price);
         result = 17 * result + type.hashCode();
         result = 17 * result + (critical ? 1 : 0);
+        result = 17 * result + warranty.hashCode();
         return result;
     }
 
@@ -102,6 +120,7 @@ public abstract class Device {
         sb.append(", price=").append(price);
         sb.append(", type=").append(type);
         sb.append(", critical=").append(critical);
+        sb.append(", warranty=").append(warranty);
         sb.append('}');
         return sb.toString();
     }

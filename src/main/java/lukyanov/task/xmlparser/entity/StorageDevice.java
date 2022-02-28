@@ -39,8 +39,11 @@ public class StorageDevice extends Device{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
         StorageDevice that = (StorageDevice) o;
-        return storageCapacity == that.storageCapacity && writeSpeed == that.writeSpeed && readingSpeed == that.readingSpeed;
+        if (storageCapacity != that.storageCapacity) return false;
+        if (writeSpeed != that.writeSpeed) return false;
+        return readingSpeed == that.readingSpeed;
     }
 
     @Override

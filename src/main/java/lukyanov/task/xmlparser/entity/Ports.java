@@ -32,12 +32,15 @@ public class Ports {
         this.lpt = lpt;
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ports ports = (Ports) o;
-        return com == ports.com && usb == ports.usb && lpt == ports.lpt;
+        if (com != ports.com) return false;
+        if (usb != ports.usb) return false;
+        return lpt == ports.lpt;
     }
 
     @Override

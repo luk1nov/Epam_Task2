@@ -24,6 +24,7 @@
             <element name="price" type="double"/>
             <element name="type" type="tns:Type"/>
             <element name="critical" type="boolean" default="false"/>
+            <element name="warranty" type="date" default="2023-01-01"/>
         </sequence>
         <attribute name="device-id" type="tns:deviceID" use="required"/>
         <attribute name="title" type="string" use="optional"/>

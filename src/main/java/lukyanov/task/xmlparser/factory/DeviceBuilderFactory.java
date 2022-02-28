@@ -27,7 +27,6 @@ public class DeviceBuilderFactory {
                 return new DevicesSaxBuilder();
             }
             default -> throw new EnumConstantNotPresentException(type.getDeclaringClass(), type.name());
-
         }
     }
 

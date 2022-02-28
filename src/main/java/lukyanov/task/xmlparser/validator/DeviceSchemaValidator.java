@@ -29,20 +29,18 @@ public class DeviceSchemaValidator {
         return instance;
     }
 
-    public boolean validateXml(){
+    public boolean validateXml(String xmlPath, String schemaPath){
         String language = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-        String fileName = "resources/data/devices.xml";
-        String schemaName = "resources/data/schema.xsd";
         SchemaFactory factory = SchemaFactory.newInstance(language);
-        File schemaLocation = new File(schemaName);
+        File schemaLocation = new File(schemaPath);
         try {
             Schema schema = factory.newSchema(schemaLocation);
             Validator validator = schema.newValidator();
-            Source source = new StreamSource(fileName);
+            Source source = new StreamSource(xmlPath);
             validator.setErrorHandler(new DeviceErrorHandler());
             validator.validate(source);
         } catch (SAXException | IOException e) {
-            logger.info(fileName + " is not correct or valid");
+            logger.info(xmlPath + " is not correct or valid");
             return false;
         }
         return true;

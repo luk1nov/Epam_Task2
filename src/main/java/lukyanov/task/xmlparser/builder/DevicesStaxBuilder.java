@@ -12,19 +12,20 @@ import javax.xml.stream.XMLStreamReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDate;
 
 public class DevicesStaxBuilder extends AbstractDeviceBuilder{
     private static final Logger logger = LogManager.getLogger();
     private static final char UNDERSCORE = '_';
     private static final char HYPHEN = '-';
-    private XMLInputFactory inputFactory;
 
     public DevicesStaxBuilder() {
     }
 
     @Override
     public void buildSetDevices(String filename) {
-        inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         try(FileInputStream inputStream = new FileInputStream(filename)) {
             XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
             while (reader.hasNext()){
@@ -62,6 +63,7 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
                         case BRAND -> device.setBrand(getXMLText(reader));
                         case PRICE -> device.setPrice(Double.parseDouble(getXMLText(reader)));
                         case CRITICAL -> device.setCritical(Boolean.parseBoolean(getXMLText(reader)));
+                        case WARRANTY -> device.setWarranty(LocalDate.parse(getXMLText(reader)));
                         case TYPE -> {
                             DeviceType deviceType = buildDeviceType(reader, device);
                             device.setType(deviceType);
@@ -165,7 +167,7 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
         throw new CustomException("unknown element int tag <ports>");
     }
 
-    private String getXMLText(XMLStreamReader reader) throws XMLStreamException {
+    private String getXMLContent(XMLStreamReader reader) throws XMLStreamException {
         String text = null;
         if (reader.hasNext()) {
             reader.next();
@@ -174,7 +176,11 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
         return text;
     }
 
-    public boolean isDeviceTag(String tag){
+    private String getXMLText(XMLStreamReader reader) throws XMLStreamException {
+        return getXMLContent(reader).strip();
+    }
+
+    private boolean isDeviceTag(String tag){
         return DeviceXmlTag.AUDIO_DEVICE.getTagName().equals(tag) || DeviceXmlTag.STORAGE_DEVICE.getTagName().equals(tag);
     }
 }
