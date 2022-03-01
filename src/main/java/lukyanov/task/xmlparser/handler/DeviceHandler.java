@@ -1,13 +1,15 @@
 package lukyanov.task.xmlparser.handler;
 
 import lukyanov.task.xmlparser.builder.DeviceXmlTag;
-import lukyanov.task.xmlparser.entity.*;
+import lukyanov.task.xmlparser.entity.AudioDevice;
+import lukyanov.task.xmlparser.entity.Brand;
+import lukyanov.task.xmlparser.entity.Device;
+import lukyanov.task.xmlparser.entity.StorageDevice;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.DefaultHandler;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -87,6 +89,7 @@ public class DeviceHandler extends DefaultHandler {
                     AudioDevice audioDevice = (AudioDevice) currentDevice;
                     audioDevice.setSurround(data);
                 }
+                default -> logger.error("Unknown tag: " + currentXmlTag);
             }
             currentXmlTag = null;
         }

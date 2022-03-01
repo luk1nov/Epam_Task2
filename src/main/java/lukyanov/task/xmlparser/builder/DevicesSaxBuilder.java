@@ -24,8 +24,6 @@ public class DevicesSaxBuilder extends AbstractDeviceBuilder{
         handler = new DeviceHandler();
     }
 
-
-
     @Override
     public void buildSetDevices(String filename) {
         try {
