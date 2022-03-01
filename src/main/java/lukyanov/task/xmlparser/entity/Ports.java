@@ -1,9 +1,9 @@
 package lukyanov.task.xmlparser.entity;
 
 public class Ports {
-    boolean com;
-    boolean usb;
-    boolean lpt;
+    private boolean com;
+    private boolean usb;
+    private boolean lpt;
 
     public Ports() {
     }
