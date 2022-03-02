@@ -96,9 +96,7 @@ public abstract class Device {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Device device = (Device) o;
-
         if (Double.compare(device.price, price) != 0) return false;
         if (critical != device.critical) return false;
         if (deviceId != null ? !deviceId.equals(device.deviceId) : device.deviceId != null) return false;
