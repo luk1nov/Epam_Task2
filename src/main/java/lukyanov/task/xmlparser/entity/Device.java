@@ -1,6 +1,5 @@
 package lukyanov.task.xmlparser.entity;
 
-import java.time.Duration;
 import java.time.LocalDate;
 
 public abstract class Device {
@@ -12,6 +11,10 @@ public abstract class Device {
     private DeviceType type;
     private boolean critical;
     private LocalDate warranty;
+
+    public static class Builder{
+
+    }
 
     public Device() {
         type = new DeviceType();
