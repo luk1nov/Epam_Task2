@@ -186,6 +186,6 @@ public abstract class Device {
             return (B) this;
         }
 
-        abstract Device build();
+        public abstract Device build();
     }
 }
