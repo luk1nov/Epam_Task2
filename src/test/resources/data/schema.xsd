@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.example.org/devices"
+        xmlns:tns="http://www.example.org/devices"
+        elementFormDefault="qualified">
+
+    <element name="devices">
+        <complexType>
+            <sequence>
+                <element ref="tns:device" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+
+    <element name="device" type="tns:Device" abstract="true"/>
+    <element name="storage-device" type="tns:storageDevice" substitutionGroup="tns:device"/>
+    <element name="audio-device" type="tns:audioDevice" substitutionGroup="tns:device"/>
+
+
+    <complexType name="Device" >
+        <sequence>
+            <element name="name" type="string"/>
+            <element name="brand" type="tns:Brand"/>
+            <element name="price" type="double"/>
+            <element name="type" type="tns:Type"/>
+            <element name="critical" type="boolean" default="false"/>
+            <element name="warranty" type="date" default="2023-01-01"/>
+        </sequence>
+        <attribute name="device-id" type="tns:deviceID" use="required"/>
+        <attribute name="title" type="string" use="optional"/>
+    </complexType>
+
+    <complexType name="storageDevice">
+        <complexContent>
+            <extension base="tns:Device">
+                <sequence>
+                    <element name="storage-capacity" type="positiveInteger"/>
+                    <element name="write-speed" type="positiveInteger"/>
+                    <element name="reading-speed" type="positiveInteger"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="audioDevice">
+        <complexContent>
+            <extension base="tns:Device">
+                <sequence>
+                    <element name="wireless" type="boolean"/>
+                    <element name="surround" type="tns:Surround"/>
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+
+    <simpleType name="deviceID">
+        <restriction base="ID">
+            <pattern value="\w\d{1,6}"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="Type">
+        <sequence>
+            <element name="peripheral" type="boolean"/>
+            <element name="power-usage" type="positiveInteger"/>
+            <element name="cooler" type="boolean"/>
+            <element name="ports" type="tns:Ports" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Ports">
+        <sequence>
+            <element name="com" type="boolean"/>
+            <element name="usb" type="boolean"/>
+            <element name="lpt" type="boolean"/>
+        </sequence>
+    </complexType>
+
+    <simpleType name="Surround">
+        <restriction base="string">
+            <enumeration value="5.1"/>
+            <enumeration value="7.1"/>
+            <enumeration value="9.1"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Brand">
+        <restriction base="string">
+            <enumeration value="Razer"/>
+            <enumeration value="Sony"/>
+            <enumeration value="HyperX"/>
+            <enumeration value="Logitech"/>
+            <enumeration value="Oclick"/>
+            <enumeration value="Sandisk"/>
+            <enumeration value="WD"/>
+        </restriction>
+    </simpleType>
+    
+</schema>

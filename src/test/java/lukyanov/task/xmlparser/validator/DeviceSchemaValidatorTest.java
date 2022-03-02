@@ -7,10 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class DeviceSchemaValidatorTest {
     private static final DeviceSchemaValidator validator = DeviceSchemaValidator.getInstance();
     private static final String XSD_PATH = "resources/data/schema.xsd";
-    private static final String XML_PATH = "resources/data/devices.xml";
+    private static final String VALID_XML_PATH = "src/test/resources/data/devices_valid.xml";
+    private static final String INVALID_XML_PATH = "src/test/resources/data/devices_invalid.xml";
 
     @Test
     void validateXml() {
-        assertTrue(validator.validateXml(XML_PATH, XSD_PATH));
+        validator.validateXml(INVALID_XML_PATH, XSD_PATH);
     }
 }

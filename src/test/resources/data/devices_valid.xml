@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<devices xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://www.example.org/devices"
+         xsi:schemaLocation="http://www.example.org/tariffs schema.xsd">
+
+    <audio-device device-id="a1" title="headset razer">
+        <name>Headset</name>
+        <brand>Razer</brand>
+        <price>109.99</price>
+        <type>
+            <peripheral>true</peripheral>
+            <power-usage>2</power-usage>
+            <cooler>false</cooler>
+            <ports>
+                <com>false</com>
+                <usb>true</usb>
+                <lpt>false</lpt>
+            </ports>
+        </type>
+        <critical>false</critical>
+        <warranty>2023-01-01</warranty>
+        <wireless>false</wireless>
+        <surround>5.1</surround>
+    </audio-device>
+
+    <audio-device device-id="a2" title="microphone hyperx">
+        <name>Microphone</name>
+        <brand>HyperX</brand>
+        <price>129.99</price>
+        <type>
+            <peripheral>true</peripheral>
+            <power-usage>6</power-usage>
+            <cooler>false</cooler>
+            <ports>
+                <com>false</com>
+                <usb>true</usb>
+                <lpt>false</lpt>
+            </ports>
+        </type>
+        <critical>false</critical>
+        <warranty>2023-03-01</warranty>
+        <wireless>false</wireless>
+        <surround>9.1</surround>
+    </audio-device>
+
+    <audio-device device-id="a3" title="headphones logitech">
+        <name>Headphones</name>
+        <brand>Logitech</brand>
+        <price>89.99</price>
+        <type>
+            <peripheral>true</peripheral>
+            <power-usage>3</power-usage>
+            <cooler>false</cooler>
+            <ports>
+                <com>false</com>
+                <usb>true</usb>
+                <lpt>false</lpt>
+            </ports>
+        </type>
+        <critical>false</critical>
+        <warranty>2023-03-01</warranty>
+        <wireless>true</wireless>
+        <surround>7.1</surround>
+    </audio-device>
+
+    <storage-device device-id="s1" title="ssd western-digital">
+        <name>SSD</name>
+        <brand>WD</brand>
+        <price>149.0</price>
+        <type>
+            <peripheral>false</peripheral>
+            <power-usage>20</power-usage>
+            <cooler>true</cooler>
+            <ports>
+                <com>false</com>
+                <usb>false</usb>
+                <lpt>false</lpt>
+            </ports>
+        </type>
+        <critical>false</critical>
+        <warranty>2022-09-01</warranty>
+        <storage-capacity>256</storage-capacity>
+        <write-speed>1800</write-speed>
+        <reading-speed>1600</reading-speed>
+    </storage-device>
+
+    <storage-device device-id="s2" title="hdd sandisk">
+        <name>HDD</name>
+        <brand>Sandisk</brand>
+        <price>1439.0</price>
+        <type>
+            <peripheral>false</peripheral>
+            <power-usage>25</power-usage>
+            <cooler>false</cooler>
+            <ports>
+                <com>true</com>
+                <usb>false</usb>
+                <lpt>false</lpt>
+            </ports>
+        </type>
+        <critical>true</critical>
+        <warranty>2023-01-01</warranty>
+        <storage-capacity>1024</storage-capacity>
+        <write-speed>3600</write-speed>
+        <reading-speed>3200</reading-speed>
+    </storage-device>
+
+    <storage-device device-id="s3" title="hdd western-digital">
+        <name>HDD</name>
+        <brand>WD</brand>
+        <price>1449.0</price>
+        <type>
+            <peripheral>false</peripheral>
+            <power-usage>15</power-usage>
+            <cooler>false</cooler>
+            <ports>
+                <com>false</com>
+                <usb>false</usb>
+                <lpt>true</lpt>
+            </ports>
+        </type>
+        <critical>false</critical>
+        <warranty>2023-01-01</warranty>
+        <storage-capacity>512</storage-capacity>
+        <write-speed>2000</write-speed>
+        <reading-speed>1700</reading-speed>
+    </storage-device>
+
+
+</devices>

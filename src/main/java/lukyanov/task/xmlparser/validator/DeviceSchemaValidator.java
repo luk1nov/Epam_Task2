@@ -40,7 +40,7 @@ public class DeviceSchemaValidator {
             validator.setErrorHandler(new DeviceErrorHandler());
             validator.validate(source);
         } catch (SAXException | IOException e) {
-            logger.info(xmlPath + " is not correct or valid");
+            logger.error(xmlPath + " is not correct or valid");
             return false;
         }
         return true;
