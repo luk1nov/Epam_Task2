@@ -30,4 +30,12 @@ class DeviceBuilderFactoryTest {
         AbstractDeviceBuilder builder = DeviceBuilderFactory.createDeviceBuilder(DOM);
         assertTrue(builder instanceof DevicesDomBuilder);
     }
+
+    @Test
+    void createInvalidDeviceBuilder() {
+        assertThrows(IllegalArgumentException.class, () -> {
+                    AbstractDeviceBuilder builder = DeviceBuilderFactory.createDeviceBuilder("123");
+        });
+    }
+
 }

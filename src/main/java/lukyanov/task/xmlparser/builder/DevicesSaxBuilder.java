@@ -1,5 +1,6 @@
 package lukyanov.task.xmlparser.builder;
 
+import lukyanov.task.xmlparser.exception.CustomException;
 import lukyanov.task.xmlparser.handler.DeviceErrorHandler;
 import lukyanov.task.xmlparser.handler.DeviceHandler;
 import org.apache.logging.log4j.LogManager;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class DevicesSaxBuilder extends AbstractDeviceBuilder{
     private static final Logger logger = LogManager.getLogger();
     private final SAXParserFactory factory;
-    private DeviceHandler handler;
+    private final DeviceHandler handler;
 
 
     public DevicesSaxBuilder() {
@@ -25,7 +26,7 @@ public class DevicesSaxBuilder extends AbstractDeviceBuilder{
     }
 
     @Override
-    public void buildSetDevices(String filename) {
+    public void buildSetDevices(String filename) throws CustomException {
         try {
             SAXParser parser = factory.newSAXParser();
             XMLReader reader = parser.getXMLReader();
@@ -36,6 +37,7 @@ public class DevicesSaxBuilder extends AbstractDeviceBuilder{
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
             logger.error(e.getMessage());
+            throw new CustomException(e.getMessage());
         }
 
     }

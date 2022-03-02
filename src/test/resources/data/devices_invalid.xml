@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://www.example.org/tariffs schema.xsd">
 
     <audio-device device-id="a1" title="headset razer">
-        <brand>Razer<brand>
+        <brand>Razer</brand>
         <name>Headset</name>
         <price>109.99</price>
         <type>
@@ -125,6 +125,4 @@
         <write-speed>2000</write-speed>
         <reading-speed>1700</reading-speed>
     </storage-device>
-
-
 </devices>

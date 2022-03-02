@@ -1,6 +1,7 @@
 package lukyanov.task.xmlparser.builder;
 
 import lukyanov.task.xmlparser.entity.*;
+import lukyanov.task.xmlparser.exception.CustomException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
@@ -13,9 +14,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.util.HashSet;
 
 public class DevicesDomBuilder extends AbstractDeviceBuilder{
     private static final Logger logger = LogManager.getLogger();
@@ -35,7 +34,7 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
     }
 
     @Override
-    public void buildSetDevices(String filename) {
+    public void buildSetDevices(String filename) throws CustomException {
         Document doc;
         try {
             doc = docBuilder.parse(filename);
@@ -56,6 +55,7 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
 
         } catch (SAXException | IOException e) {
             logger.error(e.getMessage());
+            throw new CustomException(e.getMessage());
         }
     }
 
@@ -63,7 +63,6 @@ public class DevicesDomBuilder extends AbstractDeviceBuilder{
         Device device = deviceElement.getTagName().equals(DeviceXmlTag.AUDIO_DEVICE.getTagName()) ?
                 new AudioDevice() : new StorageDevice();
         String data = deviceElement.getAttribute(DeviceXmlTag.DEVICE_ID.getTagName());
-        logger.debug(data);
         device.setDeviceId(data);
 
         data = deviceElement.getAttribute(DeviceXmlTag.TITLE.getTagName());

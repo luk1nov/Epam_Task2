@@ -1,7 +1,5 @@
 package lukyanov.task.xmlparser.entity;
 
-import java.util.Objects;
-
 public class StorageDevice extends Device{
     private int storageCapacity;
     private int writeSpeed;
@@ -9,6 +7,13 @@ public class StorageDevice extends Device{
 
     public StorageDevice() {
         super();
+    }
+
+    public StorageDevice(StorageDeviceBuilder builder){
+        super(builder.deviceId, builder.title, builder.name, builder.brand, builder.price, builder.type, builder.critical, builder.warranty);
+        this.storageCapacity = builder.storageCapacity;
+        this.writeSpeed = builder.writeSpeed;
+        this.readingSpeed = builder.readingSpeed;
     }
 
     public int getStorageCapacity() {
@@ -64,5 +69,34 @@ public class StorageDevice extends Device{
         sb.append(", readingSpeed=").append(readingSpeed);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static class StorageDeviceBuilder extends Device.DeviceBuilder<StorageDeviceBuilder>{
+        private int storageCapacity;
+        private int writeSpeed;
+        private int readingSpeed;
+
+        public StorageDeviceBuilder(){
+        }
+
+        public StorageDeviceBuilder storageCapacity(int storageCapacity){
+            this.storageCapacity = storageCapacity;
+            return this;
+        }
+
+        public StorageDeviceBuilder writeSpeed(int writeSpeed){
+            this.writeSpeed = writeSpeed;
+            return this;
+        }
+
+        public StorageDeviceBuilder readingSpeed(int readingSpeed){
+            this.readingSpeed = readingSpeed;
+            return this;
+        }
+
+        @Override
+        public StorageDevice build(){
+            return new StorageDevice(this);
+        }
     }
 }

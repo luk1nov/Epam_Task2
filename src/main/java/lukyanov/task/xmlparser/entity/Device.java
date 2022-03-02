@@ -12,12 +12,20 @@ public abstract class Device {
     private boolean critical;
     private LocalDate warranty;
 
-    public static class Builder{
-
-    }
-
     public Device() {
         type = new DeviceType();
+    }
+
+    public Device(String deviceId, String title, String name, String brand,
+                  double price, DeviceType type, boolean critical, LocalDate warranty) {
+        this.deviceId = deviceId;
+        this.title = title;
+        this.name = name;
+        this.brand = brand;
+        this.price = price;
+        this.type = type;
+        this.critical = critical;
+        this.warranty = warranty;
     }
 
     public String getDeviceId() {
@@ -126,5 +134,58 @@ public abstract class Device {
         sb.append(", warranty=").append(warranty);
         sb.append('}');
         return sb.toString();
+    }
+
+    protected static abstract class DeviceBuilder<B extends DeviceBuilder<?>>{
+        protected String deviceId;
+        protected String title;
+        protected String name;
+        protected String brand;
+        protected double price;
+        protected DeviceType type;
+        protected boolean critical;
+        protected LocalDate warranty;
+
+        public B deviceId(String deviceId){
+            this.deviceId = deviceId;
+            return (B) this;
+        }
+
+        public B title(String title){
+            this.title = title;
+            return (B) this;
+        }
+
+        public B name(String name){
+            this.name = name;
+            return (B) this;
+        }
+
+        public B brand(String brand){
+            this.brand = brand;
+            return (B) this;
+        }
+
+        public B price(Double price){
+            this.price = price;
+            return (B) this;
+        }
+
+        public B type(DeviceType type){
+            this.type = type;
+            return (B) this;
+        }
+
+        public B critical(Boolean critical){
+            this.critical = critical;
+            return (B) this;
+        }
+
+        public B warranty(LocalDate warranty){
+            this.warranty = warranty;
+            return (B) this;
+        }
+
+        abstract Device build();
     }
 }

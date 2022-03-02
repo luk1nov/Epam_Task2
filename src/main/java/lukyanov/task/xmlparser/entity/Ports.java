@@ -8,6 +8,12 @@ public class Ports {
     public Ports() {
     }
 
+    public Ports(boolean com, boolean usb, boolean lpt) {
+        this.com = com;
+        this.usb = usb;
+        this.lpt = lpt;
+    }
+
     public boolean isCom() {
         return com;
     }

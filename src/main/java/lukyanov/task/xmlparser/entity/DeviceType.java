@@ -13,6 +13,13 @@ public class DeviceType {
         ports = new Ports();
     }
 
+    public DeviceType(boolean peripheral, int powerUsage, boolean cooler, Ports ports) {
+        this.peripheral = peripheral;
+        this.powerUsage = powerUsage;
+        this.cooler = cooler;
+        this.ports = ports;
+    }
+
     public boolean isPeripheral() {
         return peripheral;
     }

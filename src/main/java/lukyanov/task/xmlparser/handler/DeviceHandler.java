@@ -19,7 +19,7 @@ public class DeviceHandler extends DefaultHandler {
     private static final Logger logger = LogManager.getLogger();
     private static final char UNDERSCORE = '_';
     private static final char HYPHEN = '-';
-    private Set<Device> devices;
+    private final Set<Device> devices;
     private Device currentDevice;
     private DeviceXmlTag currentXmlTag;
     private EnumSet<DeviceXmlTag> withText;
@@ -41,9 +41,6 @@ public class DeviceHandler extends DefaultHandler {
             currentDevice = audioDeviceTag.equals(qName) ? new AudioDevice() : new StorageDevice();
             currentDevice.setDeviceId(attrs.getValue(DeviceXmlTag.DEVICE_ID.getTagName()));
             String title = attrs.getValue(DeviceXmlTag.TITLE.getTagName());
-            if (title == null){
-                title = "";
-            }
             currentDevice.setTitle(title);
         } else{
             DeviceXmlTag temp = DeviceXmlTag.valueOf(qName.toUpperCase().replace(HYPHEN, UNDERSCORE));
@@ -89,7 +86,6 @@ public class DeviceHandler extends DefaultHandler {
                     AudioDevice audioDevice = (AudioDevice) currentDevice;
                     audioDevice.setSurround(data);
                 }
-                default -> logger.error("Unknown tag: " + currentXmlTag);
             }
             currentXmlTag = null;
         }

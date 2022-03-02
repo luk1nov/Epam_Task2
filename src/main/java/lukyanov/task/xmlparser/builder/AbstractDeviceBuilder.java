@@ -1,6 +1,7 @@
 package lukyanov.task.xmlparser.builder;
 
 import lukyanov.task.xmlparser.entity.Device;
+import lukyanov.task.xmlparser.exception.CustomException;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,5 +22,5 @@ public abstract class AbstractDeviceBuilder {
         return deviceSet;
     }
 
-    public abstract void buildSetDevices(String filename);
+    public abstract void buildSetDevices(String filename) throws CustomException;
 }

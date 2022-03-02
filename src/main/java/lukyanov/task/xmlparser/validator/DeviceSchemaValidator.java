@@ -37,7 +37,6 @@ public class DeviceSchemaValidator {
             Schema schema = factory.newSchema(schemaLocation);
             Validator validator = schema.newValidator();
             Source source = new StreamSource(xmlPath);
-            validator.setErrorHandler(new DeviceErrorHandler());
             validator.validate(source);
         } catch (SAXException | IOException e) {
             logger.error(xmlPath + " is not correct or valid");

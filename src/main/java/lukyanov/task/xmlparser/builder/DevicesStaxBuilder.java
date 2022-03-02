@@ -24,7 +24,7 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
     }
 
     @Override
-    public void buildSetDevices(String filename) {
+    public void buildSetDevices(String filename) throws CustomException {
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         try(FileInputStream inputStream = new FileInputStream(filename)) {
             XMLStreamReader reader = inputFactory.createXMLStreamReader(inputStream);
@@ -40,10 +40,13 @@ public class DevicesStaxBuilder extends AbstractDeviceBuilder{
             }
         } catch (XMLStreamException e) {
             logger.error("reading xml error", e);
+            throw new CustomException("reading xml error " + e.getMessage());
         } catch (IOException e) {
-            logger.error("reading file " + filename + " error");
+            logger.error("reading file " + filename + " error", e);
+            throw new CustomException("reading file " + filename + " error " + e.getMessage());
         } catch (CustomException e) {
             logger.error("xml file has unknown tag", e);
+            throw new CustomException("xml file has unknown tag " + e.getMessage());
         }
     }
 

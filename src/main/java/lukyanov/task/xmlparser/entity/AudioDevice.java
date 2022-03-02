@@ -10,6 +10,12 @@ public class AudioDevice extends Device{
         super();
     }
 
+    public AudioDevice(AudioDevice.AudioDeviceBuilder builder){
+        super(builder.deviceId, builder.title, builder.name, builder.brand, builder.price, builder.type, builder.critical, builder.warranty);
+        this.surround = builder.surround;
+        this.wireless = builder.wireless;
+    }
+
     public String getSurround() {
         return surround;
     }
@@ -52,5 +58,28 @@ public class AudioDevice extends Device{
         sb.append(", wireless=").append(wireless);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static class AudioDeviceBuilder extends Device.DeviceBuilder<AudioDevice.AudioDeviceBuilder> {
+        private String surround;
+        private boolean wireless;
+
+        public AudioDeviceBuilder() {
+        }
+
+        public AudioDeviceBuilder surround(String surround) {
+            this.surround = surround;
+            return this;
+        }
+
+        public AudioDeviceBuilder wireless(Boolean wireless) {
+            this.wireless = wireless;
+            return this;
+        }
+
+        @Override
+        public AudioDevice build() {
+            return new AudioDevice(this);
+        }
     }
 }
